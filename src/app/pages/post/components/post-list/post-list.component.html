@@ -1,0 +1,16 @@
+<ng-container *ngIf="userWithPosts$ | async as vm else loading">
+  <h1 class="display-4">{{ vm.user.name }}</h1>
+  <hr>
+  <div class="card-columns">
+    <div class="card" *ngFor="let post of vm.posts.data">
+      <div class="card-body">
+        <p class="card-text text-right"><small class="text-muted">{{ post.created_at }}</small></p>
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.body }}</p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <app-loading [loading]="true"></app-loading>
+</ng-template>

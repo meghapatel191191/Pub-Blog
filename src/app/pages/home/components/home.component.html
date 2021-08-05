@@ -1,0 +1,49 @@
+<div class="row justify-content-end">
+  <div class="col-3 my-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by name..."
+      [ngModel]="userListService.nameFilter$ | async"
+      (ngModelChange)="userListService.changeNameFilter($event)">
+  </div>
+</div>
+<ng-container *ngIf="userListVm$ | async as vm">
+  <div *ngIf="vm.error">
+    {{ vm.error }}
+  </div>
+  <app-loading [loading]="vm.loading"></app-loading>
+  <ng-container *ngIf="!vm.error && !vm.loading && vm.userList">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col" class="text-center">Gender</th>
+        <th scope="col" class="text-center">Status</th>
+        <th scope="col" class="text-center"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of vm.userList.data">
+        <th scope="row">{{ user.name }}</th>
+        <td>{{ user.email }}</td>
+        <td class="text-center">{{ user.gender }}</td>
+        <td class="text-center">{{ user.status }}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-outline-success btn-sm" [routerLink]="['/posts/' + user.id]">View Posts</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="row no-gutters justify-content-end">
+      <pagination
+        [totalItems]="vm.userList.meta.pagination.total"
+        [itemsPerPage]="vm.userList.meta.pagination.limit"
+        [maxSize]="10"
+        [ngModel]="userListService.currentPage$ | async"
+        (ngModelChange)="userListService.changePage($event)">
+      </pagination>
+    </div>
+  </ng-container>
+</ng-container>

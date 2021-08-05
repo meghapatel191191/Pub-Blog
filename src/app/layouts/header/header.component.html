@@ -1,0 +1,9 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/">Pub Blog</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" routerLink="/">Home</a>
+    </li>
+  </ul>
+  <span class="navbar-text">{{ clock | async | date: 'd/MM/YYYY HH:mm:ss'}}</span>
+</nav>
